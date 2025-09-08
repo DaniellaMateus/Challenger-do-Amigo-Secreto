@@ -1,13 +1,11 @@
-// app.js
-
 let amigos = JSON.parse(localStorage.getItem("amigos")) || [];
 let historicoSorteio = JSON.parse(localStorage.getItem("historicoSorteio")) || [];
 let sorteioFeito = false;
 
-// Emojis para diversão
+// Emojis
 const emojis = ["🎉", "🥳", "✨", "💖", "🎁", "🎊", "🌟"];
 
-// --- Atualiza lista na tela ---
+// Atualizar lista
 function atualizarLista() {
   const lista = document.getElementById("listaAmigos");
   lista.innerHTML = "";
@@ -20,7 +18,7 @@ function atualizarLista() {
   localStorage.setItem("amigos", JSON.stringify(amigos));
 }
 
-// --- Atualiza histórico ---
+// Atualizar histórico
 function atualizarHistorico() {
   const hist = document.getElementById("historico");
   if (!hist) return;
@@ -33,13 +31,13 @@ function atualizarHistorico() {
   localStorage.setItem("historicoSorteio", JSON.stringify(historicoSorteio));
 }
 
-// --- Limpa resultado ---
+// Limpar resultado 
 function limparResultado() {
   const resultado = document.getElementById("resultado");
   if (resultado) resultado.innerHTML = "";
 }
 
-// --- Reinicia jogo ---
+//  Reiniciar jogo
 function reiniciarJogo() {
   amigos = [];
   historicoSorteio = [];
@@ -50,12 +48,12 @@ function reiniciarJogo() {
   localStorage.clear();
 }
 
-// --- Valida nome (apenas letras e espaços) ---
+//  Valida nome (apenas letras, não aceita apenas espaços) 
 function validarNome(nome) {
   return /^[A-Za-zÀ-ú\s]+$/.test(nome);
 }
 
-// --- Mostra tela de erro quando nenhum nome é informado ---
+// Mostrar tela de erro quando nenhum nome é informado 
 function mostrarErroNome() {
   document.documentElement.style.backgroundColor = "white";
   document.body.style.backgroundColor = "white";
@@ -86,7 +84,7 @@ function mostrarErroNome() {
   });
 }
 
-// --- Adicionar amigo ---
+//  Adicionar amigo 
 function adicionarAmigo() {
   const input = document.getElementById("amigo");
   const nome = input.value.trim();
@@ -108,7 +106,7 @@ function adicionarAmigo() {
     return;
   }
 
-  // Cada amigo recebe um emoji fixo
+  //  emoji fixo
   const emoji = emojis[Math.floor(Math.random() * emojis.length)];
   amigos.push({ nome, emoji });
   atualizarLista();
@@ -117,7 +115,7 @@ function adicionarAmigo() {
   input.focus();
 }
 
-// --- Sortear amigo ---
+//  Sortear amigo
 function sortearAmigo() {
   const resultado = document.getElementById("resultado");
 
@@ -129,7 +127,7 @@ function sortearAmigo() {
   const indice = Math.floor(Math.random() * amigos.length);
   const sorteado = amigos[indice];
 
-  // Mostra mensagem "Sorteando..." com ⏳
+  // "Sorteando..." com ⏳
   resultado.innerHTML = `<li style="opacity:0;">⏳ Sorteando...</li>`;
   const el = resultado.querySelector("li");
   el.animate(
@@ -137,7 +135,7 @@ function sortearAmigo() {
     { duration: 800 }
   );
 
-  // Espera 5 segundos antes de mostrar o amigo sorteado
+  // Espera 1 segundos antes de resultado
   setTimeout(() => {
     resultado.innerHTML = `<li id="sorteado" style="font-weight:bold; font-size:1.2em;">Amigo sorteado: ${sorteado.nome} ${sorteado.emoji}</li>`;
     const elSorteado = document.getElementById("sorteado");
@@ -156,7 +154,7 @@ function sortearAmigo() {
   sorteioFeito = true;
 }
 
-// --- Enter no input adiciona ---
+//funcionalidade para o botão Enter
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("amigo");
   if (input) {
@@ -169,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
   atualizarHistorico();
 });
 
-// --- Expor funções para HTML ---
+// Expor funções para HTML 
 window.adicionarAmigo = adicionarAmigo;
 window.sortearAmigo = sortearAmigo;
 window.reiniciarJogo = reiniciarJogo;
